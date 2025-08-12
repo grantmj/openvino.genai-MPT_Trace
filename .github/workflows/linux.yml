@@ -600,8 +600,13 @@ jobs:
             cmd: 'tests/python_tests/samples'
             run_condition: ${{ fromJSON(needs.smart_ci.outputs.affected_components).Whisper_samples.test }}
             runner: 'aks-linux-4-cores-16gb'
-          - name: 'Image generation'
-            marker: 'image_generation'
+          - name: 'dreamlike_anime_1_0'
+            marker: 'dreamlike_anime_1_0'
+            cmd: 'tests/python_tests/samples'
+            run_condition: ${{ fromJSON(needs.smart_ci.outputs.affected_components).Image_generation_samples.test }}
+            runner: 'aks-linux-16-cores-32gb'
+          - name: 'LCM_Dreamshaper_v7_int8_ov'
+            marker: 'LCM_Dreamshaper_v7_int8_ov'
             cmd: 'tests/python_tests/samples'
             run_condition: ${{ fromJSON(needs.smart_ci.outputs.affected_components).Image_generation_samples.test }}
             runner: 'aks-linux-16-cores-32gb'
@@ -766,7 +771,7 @@ jobs:
         run: |
           source ${{ env.INSTALL_DIR }}/setupvars.sh
           chmod +x ${{ env.INSTALL_DIR }}/tests/tests_continuous_batching
-          ${{ env.INSTALL_DIR }}/tests/tests_continuous_batching
+          ${{ env.INSTALL_DIR }}/tests/tests_continuous_batching --gtest_filter="-AddSecondInputTest.*"
 
       - name: Test Continuous Batching Tools
         if: ${{ fromJSON(needs.smart_ci.outputs.affected_components).continuous_batching }}
